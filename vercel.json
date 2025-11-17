@@ -1,18 +1,8 @@
 {
   "version": 2,
   "name": "oh-my-git",
-  "builds": [
-    {
-      "src": "build/html5/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/build/html5/$1"
-    }
-  ],
+  "buildCommand": "echo 'Build should be done before deployment'",
+  "outputDirectory": "build/html5",
   "headers": [
     {
       "source": "/(.*)",
@@ -28,7 +18,7 @@
       ]
     },
     {
-      "source": "/build/html5/(.*).wasm",
+      "source": "/(.*).wasm",
       "headers": [
         {
           "key": "Content-Type",
@@ -37,7 +27,7 @@
       ]
     },
     {
-      "source": "/build/html5/(.*).pck",
+      "source": "/(.*).pck",
       "headers": [
         {
           "key": "Content-Type",
