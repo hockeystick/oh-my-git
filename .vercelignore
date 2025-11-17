@@ -1,42 +1,9 @@
-# Godot project files
-.godot/
-.import/
-*.import
+# Vercel only needs files from build/html5/ (specified in vercel.json outputDirectory)
+# Exclude everything else to keep deployment fast
 
-# Build artifacts (except html5)
-build/oh-my-git-linux/
-build/oh-my-git-macos/
-build/oh-my-git-windows/
-build/*.zip
-
-# Dependencies and cache
-dependencies/
-cache/
-
-# Git
 .git/
 .github/
-
-# Development files
-*.md
-!DEPLOYMENT.md
-Makefile
-export_presets.cfg
-project.godot
-default_bus_layout.tres
-
-# Source files (not needed for deployment)
-scenes/
-scripts/
-levels/
-nodes/
-resources/
-styles/
-fonts/
-images/
-sounds/
-music/
-cards/
-
-# Only keep the HTML5 build
-!build/html5/
+.godot/
+.import/
+cache/
+dependencies/
