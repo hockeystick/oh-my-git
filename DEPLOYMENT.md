@@ -1,5 +1,7 @@
 # Vercel Deployment Guide for Oh My Git!
 
+> **Status**: Automated builds enabled via GitHub Actions
+
 This guide explains how to deploy the Oh My Git! game to Vercel.
 
 ## Prerequisites
