@@ -1,0 +1,21 @@
+{
+  "name": "oh-my-git",
+  "version": "1.0.0",
+  "description": "An open-source game about learning Git!",
+  "scripts": {
+    "build": "echo 'Please build the HTML5 version using Godot 3 and make html5 command'",
+    "deploy": "vercel --prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/git-learning-game/oh-my-git"
+  },
+  "keywords": [
+    "git",
+    "game",
+    "education",
+    "godot"
+  ],
+  "author": "blinry and contributors",
+  "license": "Blue Oak Model License 1.0.0"
+}

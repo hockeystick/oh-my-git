@@ -2,6 +2,10 @@ name = "oh-my-git"
 
 all: linux macos windows
 
+html5:
+	mkdir -p build/html5
+	godot --export "HTML5" "build/html5/index.html"
+
 linux:
 	mkdir -p build/$(name)-linux
 	godot --export "Linux" "build/$(name)-linux/$(name)"
