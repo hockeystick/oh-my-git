@@ -1,0 +1,58 @@
+name: Build HTML5 for Vercel
+
+on:
+  push:
+    branches:
+      - main
+      - claude/prepare-vercel-deployment-*
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download Godot
+        run: |
+          wget -q https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_linux_headless.64.zip
+          unzip -q Godot_v3.5.3-stable_linux_headless.64.zip
+          chmod +x Godot_v3.5.3-stable_linux_headless.64
+          mkdir -p ~/.local/share/godot
+
+      - name: Download Godot Export Templates
+        run: |
+          wget -q https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/templates/3.5.3.stable
+          unzip -q Godot_v3.5.3-stable_export_templates.tpz
+          mv templates/* ~/.local/share/godot/templates/3.5.3.stable/
+
+      - name: Build HTML5
+        run: |
+          mkdir -p build/html5
+          ./Godot_v3.5.3-stable_linux_headless.64 --export "HTML5" build/html5/index.html
+
+      - name: Verify build output
+        run: |
+          ls -la build/html5/
+          echo "Build files created:"
+          find build/html5/ -type f
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push build
+        run: |
+          git add build/html5/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Build: Generate HTML5 build for Vercel deployment [skip ci]"
+            git push
+          fi
