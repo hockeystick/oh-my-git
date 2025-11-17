@@ -2,6 +2,8 @@
 
 **Oh My Git!** is an open-source game about learning Git!
 
+[Play online on Vercel](https://your-deployment-url.vercel.app) | [Download for Desktop](https://blinry.itch.io/oh-my-git)
+
 ## Play the game!
 
 You can download binaries for Linux, macOS, and Windows [from itch.io](https://blinry.itch.io/oh-my-git)!
