@@ -7,34 +7,28 @@ on:
       - claude/prepare-vercel-deployment-*
   workflow_dispatch:
 
+env:
+  GODOT_VERSION: 3.5.3
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.5.3
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download Godot
+      - name: Setup Godot templates
         run: |
-          wget -q https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_linux_headless.64.zip
-          unzip -q Godot_v3.5.3-stable_linux_headless.64.zip
-          chmod +x Godot_v3.5.3-stable_linux_headless.64
-          mkdir -p ~/.local/share/godot
-
-      - name: Download Godot Export Templates
-        run: |
-          wget -q https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/templates/3.5.3.stable
-          unzip -q Godot_v3.5.3-stable_export_templates.tpz
-          mv templates/* ~/.local/share/godot/templates/3.5.3.stable/
+          mkdir -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
 
       - name: Build HTML5
         run: |
           mkdir -p build/html5
-          ./Godot_v3.5.3-stable_linux_headless.64 --export "HTML5" build/html5/index.html
+          godot --export "HTML5" build/html5/index.html
 
       - name: Verify build output
         run: |
@@ -42,13 +36,11 @@ jobs:
           echo "Build files created:"
           find build/html5/ -type f
 
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Commit and push build
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory /__w/oh-my-git/oh-my-git
           git add build/html5/
           if git diff --staged --quiet; then
             echo "No changes to commit"
