@@ -1,8 +1,5 @@
 {
-  "version": 2,
-  "name": "oh-my-git",
-  "buildCommand": "echo 'Build should be done before deployment'",
-  "outputDirectory": "build/html5",
+  "public": true,
   "headers": [
     {
       "source": "/(.*)",

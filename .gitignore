@@ -4,3 +4,4 @@
 /build/
 # Allow HTML5 build for Vercel deployment
 !/build/html5/
+!/public/
